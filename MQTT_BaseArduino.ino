@@ -22,6 +22,8 @@ void setup() {
 }
 
 void loop() {
+  mqtt.check();
+
   // ATTENTION: if you would receive a MQTT message run this command:
   //mqtt.check();
 

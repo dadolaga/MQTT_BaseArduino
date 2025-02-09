@@ -67,7 +67,7 @@ Mqtt::Mqtt(const char* ssid,
   Mqtt::error = new LedError(ledPin);
   Mqtt::matrix = new MatrixError();
 
-  #ifdef DEBUG
+  #if DEBUG
   debug = true;
   #endif
 }

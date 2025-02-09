@@ -6,3 +6,5 @@
 
 #define _MQTT_USERNAME "user"
 #define _MQTT_USER_PASSWORD "password"
+
+#define DEBUG 0
