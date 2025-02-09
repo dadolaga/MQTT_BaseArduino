@@ -6,6 +6,7 @@
 #include <Arduino.h>
 #include <WiFiS3.h>
 #include <ArduinoMqttClient.h>
+#include <Arduino_JSON.h>
 #include "Error.h"
 #include "Map.h"
 
@@ -15,7 +16,7 @@ class Mqtt {
     MqttClient* mqtt;
     LedError* error;
     MatrixError* matrix;
-    Map<void (*)(const char*)> map;
+    Map<void (*)(JSONVar*)> map;
 
     const char* ssid;
     const char* password;
@@ -44,7 +45,7 @@ class Mqtt {
     void check(unsigned int everyMillis = 0);
 
     void send(const char* topic, char* text);
-    void subscribe(const char* topic, void (*)(const char*));
+    void subscribe(const char* topic, void (*)(JSONVar*));
 };
 
 Mqtt::Mqtt(const char* ssid, 
@@ -149,7 +150,12 @@ void Mqtt::check(unsigned int everyMillis) {
     } else {
       if (debug) Serial.println("DEBUG: Run Function");
 
-      (*function)(text.c_str());
+      JSONVar* object = new JSONVar();
+      *object = JSON.parse(text.c_str());
+
+      (*function)(object);
+
+      delete object;
     }
   }
 }
@@ -206,7 +212,7 @@ void Mqtt::send(const char *topic, char *text) {
   mqtt->endMessage();
 }
 
-void Mqtt::subscribe(const char *topic, void (function)(const char*)) {
+void Mqtt::subscribe(const char *topic, void (function)(JSONVar*)) {
   if (debug) {
     Serial.print("DEBUG: Subcribe to: ");
     Serial.println(topic);
