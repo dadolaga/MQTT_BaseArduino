@@ -1,13 +1,15 @@
+#include "Config.h"
+
 #include "Mqtt.h"
 
-const char* SSID = "SSID_WIFI";
-const char* PASSWORD = "PASSWORD_WIFI";
+const char* SSID = _SSID;
+const char* PASSWORD = _PASSWORD;
 
-const char* BROKER_IP = "BROKER_IP";
-const int BROKER_PORT = 1883; //BROKER PORT
+const char* BROKER_IP = _MQTT_BROKER_IP;
+const int BROKER_PORT = _MQTT_BROKER_PORT; //BROKER PORT
 
-const char* USERNAME = "MQTT_USERNAME";
-const char* USERPASSWORD = "MQTT_PASSWORD";
+const char* USERNAME = _MQTT_USERNAME;
+const char* USERPASSWORD = _MQTT_USER_PASSWORD;
 
 Mqtt mqtt(SSID, PASSWORD, BROKER_IP, BROKER_PORT, USERNAME, USERPASSWORD);
 
